@@ -1,3 +1,5 @@
+START TRANSACTION;
+
 CREATE TABLE IF NOT EXISTS campaigns (
 	id integer NOT NULL,
 	campaign_type text NOT NULL,
@@ -87,3 +89,7 @@ CREATE TABLE IF NOT EXISTS friends (
 \COPY ecom.client_first_purchase_date from './data/f13/client_first_purchase_date.csv' delimiter ',' CSV header null as 'null';
 \COPY ecom.messages from './data/f13/messages.csv' delimiter ',' CSV header null as 'null';
 \COPY ecom.friends from './data/f13/friends.csv' delimiter ',' CSV header null as 'null';
+
+commit;
+
+select * from friends limit 5;
