@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS campaigns (
 	total_count integer,
 	ab_test boolean,
 	warmup_mode boolean,
+    hour_limit integer,
 	subject_length integer,
 	subject_with_personalization boolean,
 	subject_with_deadline boolean,
