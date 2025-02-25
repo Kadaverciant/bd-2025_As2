@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS messages (
 	updated_at date,
 	user_device_id integer,
 	user_id integer,
-	CONSTRAINT fk_client_first_purchase_date_client_id_to_messages_client_id FOREIGN KEY (client_id) REFERENCES ecom.client_first_purchase_date (client_id)
+	CONSTRAINT fk_client_first_purchase_date_client_id_to_messages_client_id FOREIGN KEY (client_id) REFERENCES client_first_purchase_date (client_id)
 );
 
 CREATE TABLE IF NOT EXISTS friends (
@@ -84,11 +84,11 @@ CREATE TABLE IF NOT EXISTS friends (
 	friend2 integer NOT NULL
 );
 
-\COPY ecom.campaigns from './data/f13/campaigns.csv' delimiter ',' CSV header null as 'null';
-\COPY ecom.events from './data/f13/events.csv' delimiter ',' CSV header null as 'null';
-\COPY ecom.client_first_purchase_date from './data/f13/client_first_purchase_date.csv' delimiter ',' CSV header null as 'null';
-\COPY ecom.messages from './data/f13/messages.csv' delimiter ',' CSV header null as 'null';
-\COPY ecom.friends from './data/f13/friends.csv' delimiter ',' CSV header null as 'null';
+\COPY campaigns from './data/f13/campaigns.csv' delimiter ',' CSV header null as 'null';
+\COPY events from './data/f13/events.csv' delimiter ',' CSV header null as 'null';
+\COPY client_first_purchase_date from './data/f13/client_first_purchase_date.csv' delimiter ',' CSV header null as 'null';
+\COPY messages from './data/f13/messages.csv' delimiter ',' CSV header null as 'null';
+\COPY friends from './data/f13/friends.csv' delimiter ',' CSV header null as 'null';
 
 commit;
 
