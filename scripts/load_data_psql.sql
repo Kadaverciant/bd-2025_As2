@@ -1,0 +1,92 @@
+CREATE SCHEMA IF NOT EXISTS ecom;
+SET search_path TO ecom, public;
+
+CREATE TABLE IF NOT EXISTS ecom.campaigns (
+	id integer NOT NULL,
+	campaign_type text NOT NULL,
+	channel text,
+	topic text,
+	started_at date,
+	finished_at date,
+	total_count integer,
+	ab_test boolean,
+	warmup_mode boolean,
+	subject_length integer,
+	subject_with_personalization boolean,
+	subject_with_deadline boolean,
+	subject_with_emoji boolean,
+	subject_with_bonuses boolean,
+	subject_with_discount boolean,
+	subject_with_saleout boolean,
+	is_test boolean,
+	position integer,
+	PRIMARY KEY (id, campaign_type)
+);
+
+CREATE TABLE IF NOT EXISTS ecom.events (
+	event_time date,
+	event_type text,
+	product_id integer,
+	category_id bigint,
+	category_code text,
+	brand text,
+	price real,
+	user_id integer,
+	user_session text
+);
+
+CREATE TABLE IF NOT EXISTS ecom.client_first_purchase_date (
+	client_id bigint PRIMARY KEY NOT NULL,
+	first_purchase_date date,
+	user_id integer,
+	user_device_id integer
+);
+
+CREATE TABLE IF NOT EXISTS ecom.messages (
+	id integer PRIMARY KEY NOT NULL,
+	message_id text,
+	campaign_id integer,
+	message_type text,
+	client_id bigint,
+	channel text,
+	category text,
+	platform text,
+	email_provider text,
+	stream text,
+	date date,
+	sent_at date,
+	is_opened boolean,
+	opened_first_time_at date,
+	opened_last_time_at date,
+	is_clicked boolean,
+	clicked_first_time_at date,
+	clicked_last_time_at date,
+	is_unsubscribed boolean,
+	unsubscribed_at date,
+	is_hard_bounced boolean,
+	hard_bounced_at date,
+	is_soft_bounced boolean,
+	soft_bounced_at date,
+	is_complained boolean,
+	complained_at date,
+	is_blocked boolean,
+	blocked_at date,
+	is_purchased boolean,
+	purchased_at date,
+	created_at date,
+	updated_at date,
+	user_device_id integer,
+	user_id integer,
+	CONSTRAINT fk_client_first_purchase_date_client_id_to_messages_client_id FOREIGN KEY (client_id) REFERENCES ecom.client_first_purchase_date (client_id)
+);
+
+CREATE TABLE IF NOT EXISTS ecom.friends (
+	friend1 integer NOT NULL,
+	friend2 integer NOT NULL
+);
+
+\COPY ecom.campaigns from '/data/f13/campaigns.csv' delimiter ',' CSV header null as 'null';
+\COPY ecom.events from '/data/f13/events.csv' delimiter ',' CSV header null as 'null';
+\COPY ecom.client_first_purchase_date from '/data/f13/client_first_purchase_date.csv' delimiter ',' CSV header null as 'null';
+\COPY ecom.messages from '/data/f13/messages.csv' delimiter ',' CSV header null as 'null';
+\COPY ecom.friends from '/data/f13/friends.csv' delimiter ',' CSV header null as 'null';
