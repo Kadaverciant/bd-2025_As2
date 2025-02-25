@@ -1,7 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS ecom;
-SET search_path TO ecom, public;
-
-CREATE TABLE IF NOT EXISTS ecom.campaigns (
+CREATE TABLE IF NOT EXISTS campaigns (
 	id integer NOT NULL,
 	campaign_type text NOT NULL,
 	channel text,
@@ -23,7 +20,7 @@ CREATE TABLE IF NOT EXISTS ecom.campaigns (
 	PRIMARY KEY (id, campaign_type)
 );
 
-CREATE TABLE IF NOT EXISTS ecom.events (
+CREATE TABLE IF NOT EXISTS events (
 	event_time date,
 	event_type text,
 	product_id integer,
@@ -35,14 +32,14 @@ CREATE TABLE IF NOT EXISTS ecom.events (
 	user_session text
 );
 
-CREATE TABLE IF NOT EXISTS ecom.client_first_purchase_date (
+CREATE TABLE IF NOT EXISTS client_first_purchase_date (
 	client_id bigint PRIMARY KEY NOT NULL,
 	first_purchase_date date,
 	user_id integer,
 	user_device_id integer
 );
 
-CREATE TABLE IF NOT EXISTS ecom.messages (
+CREATE TABLE IF NOT EXISTS messages (
 	id integer PRIMARY KEY NOT NULL,
 	message_id text,
 	campaign_id integer,
@@ -80,13 +77,13 @@ CREATE TABLE IF NOT EXISTS ecom.messages (
 	CONSTRAINT fk_client_first_purchase_date_client_id_to_messages_client_id FOREIGN KEY (client_id) REFERENCES ecom.client_first_purchase_date (client_id)
 );
 
-CREATE TABLE IF NOT EXISTS ecom.friends (
+CREATE TABLE IF NOT EXISTS friends (
 	friend1 integer NOT NULL,
 	friend2 integer NOT NULL
 );
 
-\COPY ecom.campaigns from '/data/f13/campaigns.csv' delimiter ',' CSV header null as 'null';
-\COPY ecom.events from '/data/f13/events.csv' delimiter ',' CSV header null as 'null';
-\COPY ecom.client_first_purchase_date from '/data/f13/client_first_purchase_date.csv' delimiter ',' CSV header null as 'null';
-\COPY ecom.messages from '/data/f13/messages.csv' delimiter ',' CSV header null as 'null';
-\COPY ecom.friends from '/data/f13/friends.csv' delimiter ',' CSV header null as 'null';
+\COPY ecom.campaigns from './data/f13/campaigns.csv' delimiter ',' CSV header null as 'null';
+\COPY ecom.events from './data/f13/events.csv' delimiter ',' CSV header null as 'null';
+\COPY ecom.client_first_purchase_date from './data/f13/client_first_purchase_date.csv' delimiter ',' CSV header null as 'null';
+\COPY ecom.messages from './data/f13/messages.csv' delimiter ',' CSV header null as 'null';
+\COPY ecom.friends from './data/f13/friends.csv' delimiter ',' CSV header null as 'null';
