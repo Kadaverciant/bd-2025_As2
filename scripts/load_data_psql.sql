@@ -85,12 +85,10 @@ CREATE TABLE IF NOT EXISTS friends (
 	friend2 integer NOT NULL
 );
 
-\COPY campaigns from './data/f13/campaigns.csv' delimiter ',' CSV header null as 'null';
-\COPY events from './data/f13/events.csv' delimiter ',' CSV header null as 'null';
-\COPY client_first_purchase_date from './data/f13/client_first_purchase_date.csv' delimiter ',' CSV header null as 'null';
-\COPY messages from './data/f13/messages.csv' delimiter ',' CSV header null as 'null';
-\COPY friends from './data/f13/friends.csv' delimiter ',' CSV header null as 'null';
+\COPY campaigns from './data/campaigns_cleaned.csv' delimiter ',' CSV header null as '';
+\COPY events from './data/events.csv' delimiter ',' CSV header null as '';
+\COPY client_first_purchase_date from './data/client_first_purchase_date.csv' delimiter ',' CSV header null as '';
+\COPY messages from './data/messages_cleaned.csv' delimiter ',' CSV header null as '';
+\COPY friends from './data/friends.csv' delimiter ',' CSV header null as '';
 
 commit;
-
-select * from friends limit 5;
