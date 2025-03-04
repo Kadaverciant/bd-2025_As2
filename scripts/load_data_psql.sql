@@ -5,12 +5,12 @@ CREATE TABLE IF NOT EXISTS campaigns (
 	campaign_type text NOT NULL,
 	channel text,
 	topic text,
-	started_at date,
-	finished_at date,
+	started_at timestamp,
+	finished_at timestamp,
 	total_count integer,
 	ab_test boolean,
 	warmup_mode boolean,
-    hour_limit integer,
+	hour_limit integer,
 	subject_length integer,
 	subject_with_personalization boolean,
 	subject_with_deadline boolean,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS campaigns (
 );
 
 CREATE TABLE IF NOT EXISTS events (
-	event_time date,
+	event_time timestamp,
 	event_type text,
 	product_id integer,
 	category_id bigint,
@@ -36,14 +36,14 @@ CREATE TABLE IF NOT EXISTS events (
 );
 
 CREATE TABLE IF NOT EXISTS client_first_purchase_date (
-	client_id bigint PRIMARY KEY NOT NULL,
-	first_purchase_date date,
+	client_id bigint PRIMARY KEY,
+	first_purchase_date timestamp,
 	user_id integer,
 	user_device_id integer
 );
 
 CREATE TABLE IF NOT EXISTS messages (
-	id integer PRIMARY KEY NOT NULL,
+	id integer PRIMARY KEY,
 	message_id text,
 	campaign_id integer,
 	message_type text,
@@ -53,36 +53,37 @@ CREATE TABLE IF NOT EXISTS messages (
 	platform text,
 	email_provider text,
 	stream text,
-	date date,
-	sent_at date,
+	date timestamp,
+	sent_at timestamp,
 	is_opened boolean,
-	opened_first_time_at date,
-	opened_last_time_at date,
+	opened_first_time_at timestamp,
+	opened_last_time_at timestamp,
 	is_clicked boolean,
-	clicked_first_time_at date,
-	clicked_last_time_at date,
+	clicked_first_time_at timestamp,
+	clicked_last_time_at timestamp,
 	is_unsubscribed boolean,
-	unsubscribed_at date,
+	unsubscribed_at timestamp,
 	is_hard_bounced boolean,
-	hard_bounced_at date,
+	hard_bounced_at timestamp,
 	is_soft_bounced boolean,
-	soft_bounced_at date,
+	soft_bounced_at timestamp,
 	is_complained boolean,
-	complained_at date,
+	complained_at timestamp,
 	is_blocked boolean,
-	blocked_at date,
+	blocked_at timestamp,
 	is_purchased boolean,
-	purchased_at date,
-	created_at date,
-	updated_at date,
+	purchased_at timestamp,
+	created_at timestamp,
+	updated_at timestamp,
 	user_device_id integer,
 	user_id integer,
-	CONSTRAINT fk_client_first_purchase_date_client_id_to_messages_client_id FOREIGN KEY (client_id) REFERENCES client_first_purchase_date (client_id)
+	CONSTRAINT fk_client_first_purchase_date_client_id_to_messages_client_id FOREIGN KEY (client_id) REFERENCES client_first_purchase_date (client_id),
+	CONSTRAINT fk_campaigns_to_messages FOREIGN KEY (campaign_id, message_type) REFERENCES campaigns (id, campaign_type)
 );
 
 CREATE TABLE IF NOT EXISTS friends (
-	friend1 integer NOT NULL,
-	friend2 integer NOT NULL
+	friend1 integer,
+	friend2 integer
 );
 
 \COPY campaigns from './data/campaigns_cleaned.csv' delimiter ',' CSV header null as '';
