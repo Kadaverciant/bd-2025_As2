@@ -35,23 +35,21 @@ CREATE TABLE IF NOT EXISTS events (
 	user_session text
 );
 
-CREATE TABLE IF NOT EXISTS client_first_purchase_date (
+CREATE TABLE IF NOT EXISTS clients (
 	client_id bigint PRIMARY KEY,
-	first_purchase_date timestamp,
 	user_id integer,
-	user_device_id integer
+	user_device_id integer,
+    email_provider text,
+	first_purchase_date timestamp
 );
 
 CREATE TABLE IF NOT EXISTS messages (
-	id integer PRIMARY KEY,
-	message_id text,
+	message_id text PRIMARY KEY NOT NULL,
 	campaign_id integer,
 	message_type text,
 	client_id bigint,
 	channel text,
-	category text,
 	platform text,
-	email_provider text,
 	stream text,
 	date timestamp,
 	sent_at timestamp,
@@ -75,9 +73,7 @@ CREATE TABLE IF NOT EXISTS messages (
 	purchased_at timestamp,
 	created_at timestamp,
 	updated_at timestamp,
-	user_device_id integer,
-	user_id integer,
-	CONSTRAINT fk_client_first_purchase_date_client_id_to_messages_client_id FOREIGN KEY (client_id) REFERENCES client_first_purchase_date (client_id),
+	CONSTRAINT fk_clients_client_id_to_messages_client_id FOREIGN KEY (client_id) REFERENCES clients (client_id),
 	CONSTRAINT fk_campaigns_to_messages FOREIGN KEY (campaign_id, message_type) REFERENCES campaigns (id, campaign_type)
 );
 
@@ -86,10 +82,10 @@ CREATE TABLE IF NOT EXISTS friends (
 	friend2 integer
 );
 
-\COPY campaigns from './data/campaigns_cleaned.csv' delimiter ',' CSV header null as '';
-\COPY events from './data/events.csv' delimiter ',' CSV header null as '';
-\COPY client_first_purchase_date from './data/client_first_purchase_date.csv' delimiter ',' CSV header null as '';
-\COPY messages from './data/messages_cleaned.csv' delimiter ',' CSV header null as '';
-\COPY friends from './data/friends.csv' delimiter ',' CSV header null as '';
+\COPY campaigns from './data/postgres/campaigns.csv' delimiter ',' CSV header null as '';
+\COPY events from './data/postgres/events.csv' delimiter ',' CSV header null as '';
+\COPY clients from './data/postgres/clients.csv' delimiter ',' CSV header null as '';
+\COPY messages from './data/postgres/messages.csv' delimiter ',' CSV header null as '';
+\COPY friends from './data/postgres/friends.csv' delimiter ',' CSV header null as '';
 
 commit;
