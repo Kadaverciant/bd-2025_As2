@@ -342,7 +342,7 @@ db.createCollection("categories", {
     "validationAction": "warn"
 });
 
-var exec = require("child_process").exec;
+var exec = require("child_process").execSync;
 
 exec(`mongoimport --db ecommerce --collection campaigns --type json --jsonArray  --file ./data/cleaned/campaigns.json`);
 exec(`mongoimport --db ecommerce --collection categories --type json --jsonArray  --file ./data/cleaned/categories.json`);
