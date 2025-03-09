@@ -127,7 +127,7 @@ CALL {
 with row
 MATCH (u:clients{user_id:toInteger(row['friend1'])})
 MATCH (v:clients{user_id:toInteger(row['friend2'])})
-MERGE (u)-[:friends]->(v)
+MERGE (u)-[:friends]->(v)-[:friends]->(u)
 } in TRANSACTIONS OF 10000 ROWS;
 
 MATCH (m:messages), (c:campaigns)
