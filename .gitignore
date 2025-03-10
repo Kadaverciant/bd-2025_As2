@@ -182,4 +182,7 @@ cython_debug/
 /dataSources/
 /dataSources.local.xml
 /.idea
-/data
+/data/*.csv
+/data/*.json
+/data/cleaned/*.csv
+/data/cleaned/*.json
